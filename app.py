@@ -8,13 +8,11 @@ def getLLamaresponse(input_text,no_words,blog_style):
     '''
     Gets a response from the llama-2 model
     '''
-    ### LLM model
     llm=CTransformers(model=model_path,
                       model_type='llama',
                       config={'max_new_tokens':256,
                               'temperature':0.01})
     
-    ## Prompt Template
 
     template="""
         Write a blog for {blog_style} job profile for a topic {input_text}
@@ -24,7 +22,6 @@ def getLLamaresponse(input_text,no_words,blog_style):
     prompt=PromptTemplate(input_variables=["blog_style","input_text",'no_words'],
                           template=template)
     
-    ## Generate the ressponse from the LLama 2 model
     response=llm(prompt.format(blog_style=blog_style,input_text=input_text,no_words=no_words))
     print(response)
     return response
@@ -38,8 +35,6 @@ st.header("Generate Blogs 🤖")
 
 input_text=st.text_input("Enter the Blog Topic")
 
-## creating to more columns for additonal 2 fields
-
 col1,col2=st.columns([5,5])
 
 with col1:
@@ -50,6 +45,5 @@ with col2:
     
 submit=st.button("Generate")
 
-## Final response
 if submit:
     st.write(getLLamaresponse(input_text,no_words,blog_style))
